@@ -34,6 +34,10 @@ public class InMemoryCustomerRepository {
         return new ArrayList<>(customers.values());
     }
 
+    public void deleteById(final Long id) {
+        customers.remove(id);
+    }
+
     public void deleteAll() {
         customers.clear();
     }

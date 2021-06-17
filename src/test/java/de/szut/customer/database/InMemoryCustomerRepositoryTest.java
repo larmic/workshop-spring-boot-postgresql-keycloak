@@ -82,7 +82,28 @@ class InMemoryCustomerRepositoryTest {
             final var customer = new CustomerEntity("test-name", "test-company");
             repository.save(customer);
 
-            assertThat(repository.existsById(1L)).isNotNull();
+            assertThat(repository.getById(1L)).isNotNull();
+        }
+    }
+
+    @Nested
+    @DisplayName("DeleteById with")
+    class DeleteById {
+
+        @Test
+        void customerNotExists() {
+            repository.deleteById(1L);
+            // no exception occurs
+        }
+
+        @Test
+        void customerExists() {
+            final var customer = new CustomerEntity("test-name", "test-company");
+            repository.save(customer);
+
+            repository.deleteById(1L);
+
+            assertThat(repository.existsById(1L)).isFalse();
         }
     }
 
