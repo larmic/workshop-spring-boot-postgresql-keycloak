@@ -49,7 +49,7 @@ Server: Docker Engine - Community
 
 ## Aufgabe
 
-![Aufgabe](assets/goal.png)
+![Aufgabe](assets/images/goal.png)
 
 Erstelle die Anwendung `customer-management-service`. Ein Customer enthält dabei die 
 Attribute `id`, `name`, `company`, `createDate` und `lastUpdateDate`.
@@ -71,16 +71,29 @@ Die Musterlösungen stehen jeweils als eigener Branch (`muster-loesung-kapitel-x
 
 ## Bauen und Testen
 
-```sh 
-$ git clone https://github.com/FA-Team-SZUT/customer-management-service
-$ mvn clean package
+### Starten und Bauen der Anwendung
 
-# run with spring boot
+```sh 
+# build it
+$ git clone https://github.com/FA-Team-SZUT/customer-management-service
+$ mvn clean package -P build-docker-images
+
+# run it with spring boot
 $ mvn spring-boot:run
 
-# run with plain java
+# run it with plain java
 $ java -jar target/customer*.jar
 
+# run it with docker
+$ docker run --rm -p 8083:8083 larmic/szut-customer-management-service 
+
+# run it with docker compose
+$ docker compose -f assets/docker/docker-compose.yml up
+```
+
+### Demo Requests
+
+```sh 
 # HTTP request examples
 # Get all customers
 $ curl -i -H "Accept: application/json" --request GET http://localhost:8083/

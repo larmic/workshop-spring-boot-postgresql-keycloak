@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+    customer-management-service:
+        container_name: customer-management-service
+        image: larmic/szut-customer-management-service:latest
+        ports:
+            - "8083:8083"
