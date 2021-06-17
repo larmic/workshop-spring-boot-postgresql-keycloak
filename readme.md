@@ -69,3 +69,21 @@ Alle Komponenten (service, Keycloak und PostgreSQL) können über ein
 
 Die Musterlösungen stehen jeweils als eigener Branch (`muster-loesung-kapitel-x`) bereit.
 
+## Bauen und Testen
+
+```sh 
+$ git clone https://github.com/FA-Team-SZUT/customer-management-service
+$ mvn clean package
+```
+
+### Mit Spring-Maven-Plugin
+
+```sh 
+$ mvn spring-boot:run
+```
+
+### Mit Java-Boardmitteln
+
+```sh 
+$ java -jar target/customer*.jar
+```
