@@ -3,8 +3,8 @@
 Dieses Projekt dient als Unterstützung für den [Workshop](https://github.com/FA-Team-SZUT/workshop-neusta-2021-06-21_und_22)
 am 21.06. bzw. 22.06.2021.
 
-Der Workshop setzt sich aus 7 Kapiteln zusammen. Jeder Teil wird zunächst einzeln 
-vorgestellt und soll dann hier im Rahmen umgesetzt werden.
+Der Workshop setzt sich aus 7 Kapiteln ([Teil 2 bis 8](https://github.com/FA-Team-SZUT/workshop-neusta-2021-06-21_und_22)) zusammen. 
+Jeder Teil wird zunächst einzeln vorgestellt und soll dann hier im Rahmen umgesetzt werden.
 
 ## Technische Voraussetzungen
 
@@ -12,6 +12,32 @@ vorgestellt und soll dann hier im Rahmen umgesetzt werden.
 * Maven 3.x 
 * GIT
 * Docker + Docker Compose
+
+```sh 
+$ java --version
+openjdk 11.0.11 2021-04-20
+OpenJDK Runtime Environment GraalVM CE 21.1.0 (build 11.0.11+8-jvmci-21.1-b05)
+OpenJDK 64-Bit Server VM GraalVM CE 21.1.0 (build 11.0.11+8-jvmci-21.1-b05, mixed mode, sharing)
+
+$ mvn --version
+Maven home: /usr/local/Cellar/maven/3.8.1/libexec
+Java version: 11.0.11, vendor: GraalVM Community, runtime: /Library/Java/JavaVirtualMachines/graalvm-ce-java11-21.1.0/Contents/Home
+Default locale: de_DE, platform encoding: UTF-8
+OS name: "mac os x", version: "11.4", arch: "x86_64", family: "mac"
+
+$ git --version
+git version 2.30.1 (Apple Git-130)
+
+$ docker version
+Client:
+ Cloud integration: 1.0.17
+ Version:           20.10.7
+ ...
+Server: Docker Engine - Community
+ Engine:
+  Version:          20.10.7
+  ...
+```
 
 ## Durchführung
 
