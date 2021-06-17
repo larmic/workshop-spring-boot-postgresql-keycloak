@@ -161,6 +161,7 @@
                         </executions>
                         <configuration>
                             <skipDockerInfo>true</skipDockerInfo>
+                            <pullNewerImage>true</pullNewerImage>
                             <repository>larmic/szut-customer-management-service</repository>
                             <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
                             <buildArgs>
