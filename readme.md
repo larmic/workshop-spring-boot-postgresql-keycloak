@@ -23,5 +23,23 @@ vorgestellt und soll dann hier im Rahmen umgesetzt werden.
 
 ## Aufgabe
 
-TODO
+![Aufgabe](assets/goal.png)
+
+Erstelle die Anwendung `customer-management-service`. Ein Customer enthält dabei die 
+Attribute `id`, `name`, `company`, `createDate` und `lastUpdateDate`.
+
+Es muss möglich sein, über REST einen Customer anzulegen und zu löschen. Die Attribute
+`name` und `company` sollen änderbar sein. Die Datumswerte werden automatisch bestimmt.
+
+Die REST-Schnittstelle soll über einen [Keycloak](https://www.keycloak.org/) abgesichert sein.
+Dieser stellt die Rolle `user` und einen Nutzer `szut` bereit.
+
+Die Daten liegen persitent in einer [PostgreSQL](https://www.postgresql.org/).
+
+Alle Komponenten (service, Keycloak und PostgreSQL) können über ein 
+[Docker Compose](https://docs.docker.com/compose/) gestartet und gestoppt werden.
+
+## Musterlösungen
+
+Die Musterlösungen stehen jeweils als eigener Branch (`muster-loesung-kapitel-x`) bereit.
 
