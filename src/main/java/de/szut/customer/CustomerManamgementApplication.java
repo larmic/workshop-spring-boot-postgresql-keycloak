@@ -1,4 +1,4 @@
-package de.larmic.rest;
+package de.szut.customer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
