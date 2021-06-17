@@ -74,16 +74,26 @@ Die Musterlösungen stehen jeweils als eigener Branch (`muster-loesung-kapitel-x
 ```sh 
 $ git clone https://github.com/FA-Team-SZUT/customer-management-service
 $ mvn clean package
-```
 
-### Mit Spring-Maven-Plugin
-
-```sh 
+# run with spring boot
 $ mvn spring-boot:run
-```
 
-### Mit Java-Boardmitteln
-
-```sh 
+# run with plain java
 $ java -jar target/customer*.jar
+
+# HTTP request examples
+# Get all customers
+$ curl -i -H "Accept: application/json" --request GET http://localhost:8083/
+
+# Post a new customer
+$ curl -i -H "Content-Type: application/json" --request POST --data '{"name":"Lars", "company":"szut"}}' http://localhost:8083/
+
+# Read a specific customer     
+$ curl -i -H "Accept: application/json" --request GET http://localhost:8083/{customer-id}   
+
+# Update a specific customer    
+$ curl -i -H "Content-Type: application/json" "Accept: application/json" --request PUT --data '{"name":"Lars", "company":"neusta"}}' http://localhost:8083/{customer-id}
+
+# Delete a specific tweet
+$ curl -i -H "Accept: application/json" --request DELETE http://localhost:8083/{customer-id} 
 ```
