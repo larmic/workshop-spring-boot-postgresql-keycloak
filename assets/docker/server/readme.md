@@ -1,0 +1,1 @@
+Dieses `docker-compose.yml` started die gesamte Anwendung inkl. der zugehörigen Datenbank. 

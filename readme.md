@@ -89,11 +89,11 @@ $ mvn spring-boot:run
 
 # run it with plain java
 $ java -jar target/customer*.jar
+```
 
-# run it with docker
-$ docker run --rm -p 8083:8083 larmic/szut-customer-management-service 
+### Run as docker-compose
 
-# run it with docker compose
+```sh 
 $ docker compose -f assets/docker/server/docker-compose.yml up
 ```
 
