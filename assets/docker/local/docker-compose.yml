@@ -1,18 +1,45 @@
 version: '3'
 
 volumes:
-    test_postgres_data:
+    customer_postgres_data:
+        driver: local
+    keycloak_postgres_data:
         driver: local
 
 services:
-    postgres:
+    postgres_for_customer_service:
         container_name: spring-boot-postgres_container
         image: postgres:13.3
         volumes:
-            - test_postgres_data:/var/lib/postgresql/data
+            - customer_postgres_data:/var/lib/postgresql/data
         environment:
             POSTGRES_DB: development_db
             POSTGRES_USER: ${POSTGRES_USER:-postgres}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_password}
         ports:
             - "5432:5432"
+
+    postgres_for_keycloak:
+        image: postgres:13.3
+        volumes:
+            - keycloak_postgres_data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: keycloak
+            POSTGRES_USER: db-keycloak-user
+            POSTGRES_PASSWORD: db-keycloak-pw
+
+    keycloak:
+        image: jboss/keycloak:13.0.1
+        environment:
+            DB_VENDOR: POSTGRES
+            DB_ADDR: postgres_for_keycloak
+            DB_DATABASE: keycloak
+            DB_SCHEMA: public
+            DB_USER: db-keycloak-user
+            DB_PASSWORD: db-keycloak-pw
+            KEYCLOAK_USER: admin
+            KEYCLOAK_PASSWORD: admin
+        ports:
+            - 8085:8080
+        depends_on:
+            - postgres_for_keycloak
