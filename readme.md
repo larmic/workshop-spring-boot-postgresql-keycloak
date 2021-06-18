@@ -82,7 +82,7 @@ $ mvn clean package -P build-docker-images
 $ mvn clean verify -P build-docker-images
 
 # start local postgresql
-$ docker compose -f assets/docker/postgresql/docker-compose.yml up
+$ docker compose -f assets/docker/local/docker-compose.yml up
 
 # run it with spring boot
 $ mvn spring-boot:run
@@ -94,7 +94,7 @@ $ java -jar target/customer*.jar
 $ docker run --rm -p 8083:8083 larmic/szut-customer-management-service 
 
 # run it with docker compose
-$ docker compose -f assets/docker/local/docker-compose.yml up
+$ docker compose -f assets/docker/server/docker-compose.yml up
 ```
 
 ### Demo Requests

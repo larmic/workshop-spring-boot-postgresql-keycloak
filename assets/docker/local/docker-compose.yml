@@ -1,8 +1,18 @@
 version: '3'
 
+volumes:
+    test_postgres_data:
+        driver: local
+
 services:
-    customer-management-service:
-        container_name: customer-management-service
-        image: larmic/szut-customer-management-service:latest
+    postgres:
+        container_name: spring-boot-postgres_container
+        image: postgres:13.3
+        volumes:
+            - test_postgres_data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: development_db
+            POSTGRES_USER: ${POSTGRES_USER:-postgres}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_password}
         ports:
-            - "8083:8083"
+            - "5432:5432"
