@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api")
 public class CustomerController {
 
     private final InMemoryCustomerRepository customerRepository;
