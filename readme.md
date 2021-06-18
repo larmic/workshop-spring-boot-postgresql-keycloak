@@ -102,17 +102,17 @@ $ docker compose -f assets/docker/server/docker-compose.yml up
 ```sh 
 # HTTP request examples
 # Get all customers
-$ curl -i -H "Accept: application/json" --request GET http://localhost:8083/
+$ curl -i -H "Accept: application/json" --request GET http://localhost:8083/api/
 
 # Post a new customer
-$ curl -i -H "Content-Type: application/json" --request POST --data '{"name":"Lars", "company":"szut"}}' http://localhost:8083/
+$ curl -i -H "Content-Type: application/json" --request POST --data '{"name":"Lars", "company":"szut"}}' http://localhost:8083/api/
 
 # Read a specific customer     
-$ curl -i -H "Accept: application/json" --request GET http://localhost:8083/{customer-id}   
+$ curl -i -H "Accept: application/json" --request GET http://localhost:8083/api/{customer-id}   
 
 # Update a specific customer    
-$ curl -i -H "Content-Type: application/json" "Accept: application/json" --request PUT --data '{"name":"Lars", "company":"neusta"}}' http://localhost:8083/{customer-id}
+$ curl -i -H "Content-Type: application/json" "Accept: application/json" --request PUT --data '{"name":"Lars", "company":"neusta"}}' http://localhost:8083/api/{customer-id}
 
 # Delete a specific tweet
-$ curl -i -H "Accept: application/json" --request DELETE http://localhost:8083/{customer-id} 
+$ curl -i -H "Accept: application/json" --request DELETE http://localhost:8083/api/{customer-id} 
 ```

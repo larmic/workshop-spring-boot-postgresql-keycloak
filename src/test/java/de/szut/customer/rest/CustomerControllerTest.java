@@ -55,21 +55,21 @@ class CustomerControllerTest {
         @Test
         @DisplayName("body is empty")
         void bodyIsEmpty() throws Exception {
-            mockMvc.perform(post("/").content(""))
+            mockMvc.perform(post("/api/").content(""))
                 .andExpect(status().is4xxClientError());
         }
 
         @Test
         @DisplayName("body is not set")
         void bodyIsNull() throws Exception {
-            mockMvc.perform(post("/"))
+            mockMvc.perform(post("/api/"))
                 .andExpect(status().is4xxClientError());
         }
 
         @Test
         @DisplayName("body is set")
         void bodyIsNotEmpty() throws Exception {
-            mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"test-name\",\"company\":\"test-company\"}"))
+            mockMvc.perform(post("/api/").contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"test-name\",\"company\":\"test-company\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is("1")))
                 .andExpect(jsonPath("name", is("test-name")))
@@ -91,7 +91,7 @@ class CustomerControllerTest {
         @Test
         @DisplayName("customer not exists")
         void customerNotExists() throws Exception {
-            mockMvc.perform(get("/17090"))
+            mockMvc.perform(get("/api/17090"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$").doesNotExist());
         }
@@ -101,7 +101,7 @@ class CustomerControllerTest {
         void customerExists() throws Exception {
             final var customer = addCustomerToDatabase("second test customer", "second test customers company");
 
-            mockMvc.perform(get("/" + customer.getId()))
+            mockMvc.perform(get("/api/" + customer.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is(customer.getId().toString())))
                 .andExpect(jsonPath("name", is(customer.getName())))
@@ -116,7 +116,7 @@ class CustomerControllerTest {
         @Test
         @DisplayName("customers are empty")
         void customersAreEmpty() throws Exception {
-            mockMvc.perform(get("/"))
+            mockMvc.perform(get("/api/"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isEmpty());
         }
@@ -126,7 +126,7 @@ class CustomerControllerTest {
         void customersAreNotEmpty() throws Exception {
             final var customer = addCustomerToDatabase("third test customer", "third test customers company");
 
-            mockMvc.perform(get("/"))
+            mockMvc.perform(get("/api/"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id", is(customer.getId().toString())))
                 .andExpect(jsonPath("$[0].name", is(customer.getName())))
@@ -141,7 +141,7 @@ class CustomerControllerTest {
         @Test
         @DisplayName("customer not exists")
         void customerAreEmpty() throws Exception {
-            mockMvc.perform(put("/1875700").contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"test-name\",\"company\":\"test-company\"}"))
+            mockMvc.perform(put("/api/1875700").contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"test-name\",\"company\":\"test-company\"}"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$").doesNotExist());
         }
@@ -151,7 +151,7 @@ class CustomerControllerTest {
         void customerAreNotEmpty() throws Exception {
             final var customer = addCustomerToDatabase("fourth test customer", "fourth test customers company");
 
-            mockMvc.perform(put("/" + customer.getId()).contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"other-name\",\"company\":\"other-company\"}"))
+            mockMvc.perform(put("/api/" + customer.getId()).contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"other-name\",\"company\":\"other-company\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is(customer.getId().toString())))
                 .andExpect(jsonPath("name", is("other-name")))
@@ -166,7 +166,7 @@ class CustomerControllerTest {
         @Test
         @DisplayName("customer not exists")
         void customerAreEmpty() throws Exception {
-            mockMvc.perform(delete("/76"))
+            mockMvc.perform(delete("/api/76"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$").doesNotExist());
         }
@@ -176,7 +176,7 @@ class CustomerControllerTest {
         void customerAreNotEmpty() throws Exception {
             final var customer = addCustomerToDatabase("fifth test customer", "fifth test customers company");
 
-            mockMvc.perform(delete("/" + customer.getId()))
+            mockMvc.perform(delete("/api/" + customer.getId()))
                 .andExpect(status().isOk());
         }
     }
