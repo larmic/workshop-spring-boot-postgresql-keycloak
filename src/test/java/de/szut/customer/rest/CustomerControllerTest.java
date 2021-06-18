@@ -3,10 +3,12 @@ package de.szut.customer.rest;
 import de.szut.customer.database.CustomerJpaRepository;
 import de.szut.customer.database.InMemoryCustomerRepository;
 import de.szut.customer.database.model.CustomerEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -15,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,6 +39,16 @@ class CustomerControllerTest {
     @MockBean
     private CustomerJpaRepository customerRepository;
 
+    @BeforeEach
+    void setUp() {
+        // Return saved customer on calling save method and set ID to 1
+        when(customerRepository.save(any())).thenAnswer((Answer<CustomerEntity>) invocation -> {
+            final var entity = (CustomerEntity) invocation.getArguments()[0];
+            entity.setId(1L);
+            return entity;
+        });
+    }
+
     @Nested
     @DisplayName("createCustomer() with")
     class CreateCustomer {
@@ -59,10 +70,6 @@ class CustomerControllerTest {
         @Test
         @DisplayName("body is set")
         void bodyIsNotEmpty() throws Exception {
-            final var customer = new CustomerEntity("test-name", "test-company");
-            customer.setId(1L);
-            when(customerRepository.save(any())).thenReturn(customer);
-
             mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"test-name\",\"company\":\"test-company\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is("1")))
@@ -71,7 +78,6 @@ class CustomerControllerTest {
 
             final var argumentCaptor = ArgumentCaptor.forClass(CustomerEntity.class);
             verify(customerRepository).save(argumentCaptor.capture());
-            assertThat(argumentCaptor.getValue().getId()).isNull();
             assertThat(argumentCaptor.getValue().getName()).isEqualTo("test-name");
             assertThat(argumentCaptor.getValue().getCompany()).isEqualTo("test-company");
             assertThat(argumentCaptor.getValue().getCreateDate()).isCloseTo(LocalDateTime.now(), within(1, ChronoUnit.SECONDS));
@@ -179,6 +185,7 @@ class CustomerControllerTest {
     private CustomerEntity addCustomerToDatabase(final String name, final String company) {
         final var customer = new CustomerEntity(name, company);
         customer.setId(1L);
+
         when(customerRepository.existsById(1L)).thenReturn(true);
         when(customerRepository.getOne(1L)).thenReturn(customer);
         when(customerRepository.findAll()).thenReturn(Collections.singletonList(customer));
