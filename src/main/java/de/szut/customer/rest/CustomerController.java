@@ -1,6 +1,6 @@
 package de.szut.customer.rest;
 
-import de.szut.customer.database.InMemoryCustomerRepository;
+import de.szut.customer.database.CustomerJpaRepository;
 import de.szut.customer.database.model.CustomerEntity;
 import de.szut.customer.rest.dto.AddCustomerDto;
 import de.szut.customer.rest.dto.ReadCustomerDto;
@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 @RestController
 public class CustomerController {
 
-    private final InMemoryCustomerRepository customerRepository;
+    private final CustomerJpaRepository customerRepository;
 
-    public CustomerController(InMemoryCustomerRepository customerRepository) {
+    public CustomerController(CustomerJpaRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
@@ -28,11 +28,10 @@ public class CustomerController {
         return mapToDto(entity);
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<ReadCustomerDto> getCustomer(@PathVariable final String id) {
         if (this.customerRepository.existsById(Long.valueOf(id))) {
-            final var entity = this.customerRepository.getById(Long.valueOf(id));
+            final var entity = this.customerRepository.getOne(Long.valueOf(id));
             return ResponseEntity.ok(mapToDto(entity));
         }
 
@@ -50,7 +49,7 @@ public class CustomerController {
     public ResponseEntity<ReadCustomerDto> updateCustomer(@PathVariable final String id,
                                                           @RequestBody final UpdateCustomerDto customer) {
         if (this.customerRepository.existsById(Long.valueOf(id))) {
-            final var entity = this.customerRepository.getById(Long.valueOf(id));
+            final var entity = this.customerRepository.getOne(Long.valueOf(id));
             entity.setName(customer.getName());
             entity.setCompany(customer.getCompany());
             entity.setLastUpdateDate(LocalDateTime.now());

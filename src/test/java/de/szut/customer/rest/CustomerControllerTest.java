@@ -1,22 +1,33 @@
 package de.szut.customer.rest;
 
+import de.szut.customer.database.CustomerJpaRepository;
 import de.szut.customer.database.InMemoryCustomerRepository;
 import de.szut.customer.database.model.CustomerEntity;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 @WebMvcTest(value = {CustomerController.class, InMemoryCustomerRepository.class})
 class CustomerControllerTest {
@@ -24,14 +35,8 @@ class CustomerControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private InMemoryCustomerRepository customerRepository;
-
-    @BeforeEach
-    void setUp() {
-        customerRepository.deleteAll();
-    }
-
+    @MockBean
+    private CustomerJpaRepository customerRepository;
 
     @Nested
     @DisplayName("createCustomer() with")
@@ -54,11 +59,23 @@ class CustomerControllerTest {
         @Test
         @DisplayName("body is set")
         void bodyIsNotEmpty() throws Exception {
+            final var customer = new CustomerEntity("test-name", "test-company");
+            customer.setId(1L);
+            when(customerRepository.save(any())).thenReturn(customer);
+
             mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"test-name\",\"company\":\"test-company\"}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("id").isNotEmpty())
+                .andExpect(jsonPath("id", is("1")))
                 .andExpect(jsonPath("name", is("test-name")))
                 .andExpect(jsonPath("company", is("test-company")));
+
+            final var argumentCaptor = ArgumentCaptor.forClass(CustomerEntity.class);
+            verify(customerRepository).save(argumentCaptor.capture());
+            assertThat(argumentCaptor.getValue().getId()).isNull();
+            assertThat(argumentCaptor.getValue().getName()).isEqualTo("test-name");
+            assertThat(argumentCaptor.getValue().getCompany()).isEqualTo("test-company");
+            assertThat(argumentCaptor.getValue().getCreateDate()).isCloseTo(LocalDateTime.now(), within(1, ChronoUnit.SECONDS));
+            assertThat(argumentCaptor.getValue().getLastUpdateDate()).isCloseTo(LocalDateTime.now(), within(1, ChronoUnit.SECONDS));
         }
     }
 
@@ -79,7 +96,7 @@ class CustomerControllerTest {
         void customerExists() throws Exception {
             final var customer = addCustomerToDatabase("second test customer", "second test customers company");
 
-            mockMvc.perform(get("/"+customer.getId()))
+            mockMvc.perform(get("/" + customer.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is(customer.getId().toString())))
                 .andExpect(jsonPath("name", is(customer.getName())))
@@ -160,8 +177,12 @@ class CustomerControllerTest {
     }
 
     private CustomerEntity addCustomerToDatabase(final String name, final String company) {
-        final var entity = new CustomerEntity(name, company);
-        this.customerRepository.save(entity);
-        return entity;
+        final var customer = new CustomerEntity(name, company);
+        customer.setId(1L);
+        when(customerRepository.existsById(1L)).thenReturn(true);
+        when(customerRepository.getOne(1L)).thenReturn(customer);
+        when(customerRepository.findAll()).thenReturn(Collections.singletonList(customer));
+
+        return customer;
     }
 }

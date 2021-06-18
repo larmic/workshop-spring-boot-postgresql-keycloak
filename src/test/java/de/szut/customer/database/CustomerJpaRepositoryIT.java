@@ -70,20 +70,15 @@ class CustomerJpaRepositoryIT extends AbstractIntegrationTest {
     }
 
     @Nested
-    @DisplayName("FindById with")
-    class FindById {
-
-        @Test
-        void customerNotExists() {
-            assertThat(customerJpaRepository.findById(1L)).isNotPresent();
-        }
+    @DisplayName("GetOne with")
+    class GetOne {
 
         @Test
         void customerExists() {
             final var customer = new CustomerEntity("test-name", "test-company");
             customerJpaRepository.save(customer);
 
-            assertThat(customerJpaRepository.findById(customer.getId())).isPresent();
+            assertThat(customerJpaRepository.getOne(customer.getId()).getId()).isEqualTo(customer.getId());
         }
     }
 
