@@ -1,7 +1,6 @@
 package de.szut.customer.rest;
 
 import de.szut.customer.database.CustomerJpaRepository;
-import de.szut.customer.database.InMemoryCustomerRepository;
 import de.szut.customer.database.model.CustomerEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(value = {CustomerController.class, InMemoryCustomerRepository.class})
+@WebMvcTest(value = {CustomerController.class})
 class CustomerControllerTest {
 
     @Autowired
