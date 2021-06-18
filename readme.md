@@ -88,7 +88,7 @@ $ java -jar target/customer*.jar
 $ docker run --rm -p 8083:8083 larmic/szut-customer-management-service 
 
 # run it with docker compose
-$ docker compose -f assets/docker/docker-compose.yml up
+$ docker compose -f assets/docker/local/docker-compose.yml up
 ```
 
 ### Demo Requests
