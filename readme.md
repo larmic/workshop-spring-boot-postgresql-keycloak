@@ -103,7 +103,7 @@ $ docker compose -f assets/docker/server/docker-compose.yml up
 # HTTP request examples
 
 # Get token
-$ curl -X POST 'http://localhost:8085/auth/realms/szut/protocol/openid-connect/token' \
+$ curl -X POST 'http://localhost:8080/auth/realms/szut/protocol/openid-connect/token' \
  --header 'Content-Type: application/x-www-form-urlencoded' \
  --data-urlencode 'grant_type=password' \
  --data-urlencode 'client_id=customer-management-service' \

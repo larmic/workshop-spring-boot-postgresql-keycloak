@@ -14,7 +14,7 @@ $ docker compose up -d
 
 Hinweis: Beim ersten Starten dauert es ein wenig bis die URL aufrufbar ist.
 
-1. Login auf `http://localhost:8085/auth/` mit `admin` und `admin`.
+1. Login auf `http://localhost:8080/auth/` mit `admin` und `admin`.
 2. Benutzer `larmic` anlegen mit Passwort `test` und Rolle `user` und deaktiveren von `temporary password`
 
 ## Keycloak testen
@@ -29,7 +29,7 @@ $ curl -X POST '<KEYCLOAK_SERVER_URL>/auth/realms/<REALM_NAME>/protocol/openid-c
 ```
 
 ```sh 
-$ curl -X POST 'http://localhost:8085/auth/realms/szut/protocol/openid-connect/token' \
+$ curl -X POST 'http://localhost:8080/auth/realms/szut/protocol/openid-connect/token' \
  --header 'Content-Type: application/x-www-form-urlencoded' \
  --data-urlencode 'grant_type=password' \
  --data-urlencode 'client_id=customer-management-service' \

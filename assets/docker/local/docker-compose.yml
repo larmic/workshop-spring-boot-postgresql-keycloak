@@ -43,6 +43,6 @@ services:
             KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
             KEYCLOAK_IMPORT: /opt/jboss/keycloak/imports/realm-szut.json
         ports:
-            - 8085:8080
+            - 8080:8080
         depends_on:
             - postgres_for_keycloak
