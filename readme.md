@@ -78,6 +78,12 @@ Die Musterlösungen stehen jeweils als eigener Branch (`muster-loesung-kapitel-x
 $ git clone https://github.com/FA-Team-SZUT/customer-management-service
 $ mvn clean package -P build-docker-images
 
+# build it with integration tests
+$ mvn clean verify -P build-docker-images
+
+# start local postgresql
+$ docker compose -f assets/docker/postgresql/docker-compose.yml up
+
 # run it with spring boot
 $ mvn spring-boot:run
 
