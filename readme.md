@@ -1,10 +1,6 @@
 # customer-management-service
 
-Dieses Projekt dient als Unterstützung für den [Workshop](https://github.com/FA-Team-SZUT/workshop-neusta-2021-06-21_und_22)
-am 21.06. bzw. 22.06.2021.
-
-Der Workshop setzt sich aus 7 Kapiteln ([Teil 2 bis 7](https://github.com/FA-Team-SZUT/workshop-neusta-2021-06-21_und_22)) zusammen. 
-Jeder Teil wird zunächst einzeln vorgestellt und soll dann hier im Rahmen umgesetzt werden.
+Dieses Projekt dient als Unterstützung für einen Workshop.
 
 ## Technische Voraussetzungen
 
